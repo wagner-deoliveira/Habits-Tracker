@@ -45,9 +45,10 @@ export function appRoutes(app: FastifyInstance) {
             }
         })
 
-        const completedHabits = day?.dayHabits.map(dayHabit =>{
+        // @ts-ignore
+        const completedHabits = day?.dayHabits.map(dayHabit => {
             return dayHabit.habit_id
-        })
+        });
 
         const possibleHabits = await prisma.habit.findMany({
             where: {
