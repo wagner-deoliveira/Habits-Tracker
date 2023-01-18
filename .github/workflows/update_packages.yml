@@ -28,12 +28,9 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: package-update
-        uses: taichi/actions-package-update@master
-        env:
-          AUTHOR_EMAIL: wagner.deoliveira@perkinelmer.com
-          AUTHOR_NAME: Wagner
-          EXECUTE: "true"
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          UPDATE_COMMAND: npm
+      - uses: SotaSuzuki/npm-package-update-action@v1
+        id: package-update
         with:
-          args: update
+          execute_directories: |
+            server
+            frontend
