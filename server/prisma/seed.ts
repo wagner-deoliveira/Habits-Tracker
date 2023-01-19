@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client'
+import {PrismaClient} from '@prisma/client'
 
 const prisma = new PrismaClient()
 
@@ -12,8 +12,10 @@ const thirdHabitId = 'fa1a1bcf-3d87-4626-8c0d-d7fd1255ac00'
 const thirdHabitCreationDate = new Date('2023-01-08T03:00:00.000')
 
 async function run() {
-    await prisma.habit.deleteMany()
-    await prisma.day.deleteMany()
+    await prisma.dayHabit.deleteMany();
+    await prisma.habitWeekDays.deleteMany();
+    await prisma.day.deleteMany();
+    await prisma.habit.deleteMany();
 
     /**
      * Create habits
@@ -26,9 +28,9 @@ async function run() {
                 created_at: firstHabitCreationDate,
                 weekDays: {
                     create: [
-                        { week_day: 1 },
-                        { week_day: 2 },
-                        { week_day: 3 },
+                        {week_day: 1},
+                        {week_day: 2},
+                        {week_day: 3},
                     ]
                 }
             }
@@ -41,9 +43,9 @@ async function run() {
                 created_at: secondHabitCreationDate,
                 weekDays: {
                     create: [
-                        { week_day: 3 },
-                        { week_day: 4 },
-                        { week_day: 5 },
+                        {week_day: 3},
+                        {week_day: 4},
+                        {week_day: 5},
                     ]
                 }
             }
@@ -56,11 +58,11 @@ async function run() {
                 created_at: thirdHabitCreationDate,
                 weekDays: {
                     create: [
-                        { week_day: 1 },
-                        { week_day: 2 },
-                        { week_day: 3 },
-                        { week_day: 4 },
-                        { week_day: 5 },
+                        {week_day: 1},
+                        {week_day: 2},
+                        {week_day: 3},
+                        {week_day: 4},
+                        {week_day: 5},
                     ]
                 }
             }
@@ -107,8 +109,8 @@ async function run() {
                 date: new Date('2023-01-04T03:00:00.000z'),
                 dayHabits: {
                     create: [
-                        { habit_id: firstHabitId },
-                        { habit_id: secondHabitId },
+                        {habit_id: firstHabitId},
+                        {habit_id: secondHabitId},
                     ]
                 }
             }
