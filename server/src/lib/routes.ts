@@ -1,16 +1,19 @@
-import {prisma} from "./prisma";
-import {FastifyInstance} from "fastify";
+import dayjs from "dayjs"
+import {FastifyInstance} from "fastify"
 import {z} from "zod"
-import dayjs from "dayjs";
+import {prisma} from "./prisma"
 
-export function appRoutes(app: FastifyInstance) {
-    app.get('/habits', async (request) => {
+export async function appRoutes(app: FastifyInstance) {
+    app.post('/habits', async (request) => {
         const createHabitBody = z.object({
             title: z.string(),
-            weekDays: z.array(z.number().min(0).max(6))
+            weekDays: z.array(
+                z.number().min(0).max(6)
+            ),
         })
 
         const {title, weekDays} = createHabitBody.parse(request.body)
+
         const today = dayjs().startOf('day').toDate()
 
         await prisma.habit.create({
@@ -18,50 +21,49 @@ export function appRoutes(app: FastifyInstance) {
                 title,
                 created_at: today,
                 weekDays: {
-                    create: weekDays.map(weekDay => {
-                        return {week_day: weekDay}
-                    })
+                    create: weekDays.map((weekDay) => {
+                        return {
+                            week_day: weekDay,
+                        }
+                    }),
                 }
             }
         })
-        // return console.log(createHabitBody)
     })
 
     app.get('/day', async (request) => {
-        const  getDayParams = z.object({
-            date: z.coerce.date()
+        const getDayParams = z.object({
+            date: z.coerce.date(),
         })
 
-        const { date } = getDayParams.parse(request.query)
+        const {date} = getDayParams.parse(request.query)
+
         const parsedDate = dayjs(date).startOf('day')
         const weekDay = parsedDate.get('day')
 
-        const day = await prisma.day.findMany({
+        const possibleHabits = await prisma.habit.findMany({
             where: {
-                date: parsedDate.toDate()
+                created_at: {
+                    lte: date,
+                },
+                weekDays: {
+                    some: {
+                        week_day: weekDay,
+                    }
+                }
+            },
+        })
+
+        const day = await prisma.day.findFirst({
+            where: {
+                date: parsedDate.toDate(),
             },
             include: {
                 dayHabits: true
             }
         })
 
-        // @ts-ignore
-        const completedHabits = day?.dayHabits.map(dayHabit => {
-            return dayHabit.habit_id
-        });
-
-        const possibleHabits = await prisma.habit.findMany({
-            where: {
-                created_at: {
-                    lte: date
-                },
-                weekDays: {
-                    some: {
-                        week_day: weekDay
-                    }
-                }
-            }
-        });
+        const completedHabits = day?.dayHabits.map((dayHabit: { habit_id: unknown }) => dayHabit.habit_id)
 
         return {
             possibleHabits,
@@ -69,6 +71,3 @@ export function appRoutes(app: FastifyInstance) {
         }
     })
 }
-
-
-
