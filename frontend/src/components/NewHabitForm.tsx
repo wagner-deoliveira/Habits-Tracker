@@ -14,7 +14,7 @@ export function NewHabitForm() {
                 autoFocus
             />
             <label htmlFor="frequency" className="font-semibold leading-tight mt-3">
-                How frequent?
+                How often?
             </label>
 
             <button type="submit" className="mt-6 rounded-lg p-4 flex gap-6  items-center justify-center gap-3 font-semibold bg-green-600 hover:bg-green-500">
