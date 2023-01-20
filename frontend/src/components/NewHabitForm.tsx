@@ -9,14 +9,14 @@ export function NewHabitForm() {
     const [title, setTitle] = useState('')
     const [weekDays, setWeekDays] = useState<number[]>([])
 
-    function createNewHabit(event: FormEvent) {
+    async function createNewHabit(event: FormEvent) {
         event.preventDefault()
 
         if (!title || weekDays.length === 0) {
             alert('No habit title and/or week days')
         }
 
-        api.post('habits', {
+        await api.post('habits', {
             title,
             weekDays
         })
