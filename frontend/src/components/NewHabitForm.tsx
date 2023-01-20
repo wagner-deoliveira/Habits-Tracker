@@ -1,20 +1,31 @@
 import {Check} from "phosphor-react";
 import * as CheckBox from "@radix-ui/react-checkbox";
 import {FormEvent, useState} from "react";
+import {api} from "../lib/axios";
 
 const availableWeekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
 export function NewHabitForm() {
     const [title, setTitle] = useState('')
     const [weekDays, setWeekDays] = useState<number[]>([])
-    function createNewHabit(event : FormEvent) {
+
+    function createNewHabit(event: FormEvent) {
         event.preventDefault()
-        console.log(title)
-        console.log(weekDays)
+
+        if (!title || weekDays.length === 0) {
+            alert('No habit title and/or week days')
+        }
+
+        api.post('habits', {
+            title,
+            weekDays
+        })
+        setTitle('')
+        setWeekDays([])
     }
 
-    function handleToogleWeekDay(weekDay : number) {
-        if(weekDays.includes(weekDay)){
+    function handleToogleWeekDay(weekDay: number) {
+        if (weekDays.includes(weekDay)) {
             const removeWeekDays = weekDays.filter(day => day !== weekDay)
             setWeekDays(removeWeekDays)
         } else {
@@ -31,9 +42,10 @@ export function NewHabitForm() {
             <input
                 type="text"
                 id="title"
-                placeholder="Test"
+                placeholder="Enter a good habit"
                 className="p-4 rounded-lg mt-3 bg-zinc-800 text-white placeholder:text-zinc-400"
                 autoFocus
+                value={title}
                 onChange={event => setTitle(event.target.value)}
             />
             <label htmlFor="frequency" className="font-semibold leading-tight mt-3">
@@ -47,6 +59,7 @@ export function NewHabitForm() {
                             key={weekday}
                             className="flex items-center gap-3 group"
                             onCheckedChange={() => handleToogleWeekDay(index)}
+                            checked={weekDays.includes(index)}
                         >
                             <div
                                 className="h-8 w-8 rounded-lg flex items-center justify-center bg-zinc-900 border-2
