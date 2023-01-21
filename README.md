@@ -141,6 +141,13 @@ Start the server
   npx expo start
 ```
 
+## TODO list
+- [ ] Add delete nad put methods to edit and delete habits
+- [ ] Add authentication using Auth0
+- [ ] Implement push notifications
+- [ ] Create a public profile to be shared
+- [ ] Use docker containers as database (postgresql) 
+
 ## License
 This project is licensed under the MIT
 
