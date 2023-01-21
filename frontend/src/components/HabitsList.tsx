@@ -63,7 +63,7 @@ export function HabitsList({date, onCompletedChange}: HabitsListProps) {
                         onCheckedChange={() => handleToogleHabit(habit.id)}
                         checked={habitsInfo?.completedHabits.includes(habit.id)}
                         disabled={isDateInPast}
-                        className="flex items-center gap-3 group"
+                        className="flex items-center gap-3 group disabled:cursor-not-allowed"
                     >
                         <div
                             className="w-8 h-8 rounded-lg flex items-center justify-center bg-zinc-900 border-2

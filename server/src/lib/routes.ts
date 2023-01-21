@@ -149,4 +149,9 @@ export async function appRoutes(app: FastifyInstance) {
             FROM days D
         `;
     })
+
+    //TODO: Add delete nad put methods to edit and delete habits
+    //TODO: Auth0
+    //TODO: Push notifications
+    //TODO: Public profile
 }
