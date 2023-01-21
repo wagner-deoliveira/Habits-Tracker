@@ -14,6 +14,10 @@ export async function appRoutes(app: FastifyInstance) {
 
         const {title, weekDays} = createHabitBody.parse(request.body)
 
+        if (title === '' || weekDays.length === 0) {
+            throw new Error(`Invalid title: ${title} and week days: ${weekDays}`)
+        }
+
         const today = dayjs().startOf('day').toDate()
 
         await prisma.habit.create({
@@ -29,6 +33,7 @@ export async function appRoutes(app: FastifyInstance) {
                 }
             }
         })
+
     })
 
     app.get('/day', async (request) => {
