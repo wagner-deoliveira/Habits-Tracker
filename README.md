@@ -13,7 +13,7 @@ Some tools used in this project:
 <br /><br>
 <img src="assets/Cover.png" alt="Cover"/>
 
-## 🎨 Layout
+## Layout
 
 Layout developed by [Rocketseat](https://www.rocketseat.com.br/)
 
