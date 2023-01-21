@@ -23,7 +23,7 @@ export function New() {
     async function handleCreateNewHabit() {
         try {
             if (!title || weekDays.length === 0) {
-                alert('No habit title and/or week days')
+                return Alert.alert('Ouch','No habit title and/or week days')
             }
             await api.post('habits', {
                 title,
