@@ -106,7 +106,7 @@ Start the server
 Enter the project directory
 
 ```bash
-  cd Habits-Tracker\web
+  cd Habits-Tracker\frontend
 ```
 
 Install with dependencies
@@ -126,7 +126,7 @@ Start the server
 Enter the project directory
 
 ```bash
-  cd Habits-Tracker\mobile
+  cd Habits-Tracker\react-native
 ```
 
 Install with dependencies
