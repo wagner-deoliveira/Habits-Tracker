@@ -141,6 +141,12 @@ Start the server
   npx expo start
 ```
 
+Conversely, you can use the flag --clear to empty the cache 
+
+```bash
+  npx expo start --clear
+```
+
 ## TODO list
 - [ ] Add delete nad put methods to edit and delete habits
 - [ ] Add authentication using Auth0
