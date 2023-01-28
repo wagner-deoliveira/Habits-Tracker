@@ -28,10 +28,13 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Npm package update
-        uses: sotszk/npm-package-update-action@v1.0.1
-        id: package-update
+        uses: taichi/actions-package-update@master
+        env:
+          AUTHOR_EMAIL: john@example.com
+          AUTHOR_NAME: John
+          EXECUTE: "true"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          UPDATE_COMMAND: npm
+          WORKING_DIR: ./server
         with:
-          execute_directories: |
-            server
-            frontend
-
+          args: update
